@@ -1,0 +1,40 @@
+@charset "utf-8";
+/* CSS Document */
+
+body { 
+	padding-top: 70px; 
+}
+
+.searchHeading a {
+	color: #1020d0;
+	font-size: 18px;
+}
+.searchHeading {
+	padding-bottom:0;
+	margin-bottom:0;
+}
+
+.searchHeading a:visited {
+	color: #600090;
+}
+
+.searchUrl {
+	color: green;
+}
+
+.searchUrl a:visited{
+	color: #600090;
+}
+
+
+.siteLink {
+	color: blue;
+}
+.siteLink:visited {
+	color: #600090;
+}
+
+.infoGroup {
+	margin-bottom :0px;
+	padding-bottom:0px;
+}
