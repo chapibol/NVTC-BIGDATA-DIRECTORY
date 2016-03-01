@@ -1,12 +1,32 @@
 package directoryModel;
 
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.JDOUserException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+
+
+/**
+ * Imports for javaMail API
+ */
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import com.google.appengine.api.mail.MailService;
+import com.google.appengine.api.mail.MailServiceFactory;
+
+
 
 /**
  * 
@@ -15,6 +35,33 @@ import javax.jdo.Query;
  */
 public final class Utility {	
 	
+	/**
+	 * Method to send an email notification to the provided email address
+	 * @param destinationEmail
+	 * @return
+	 */
+	public static void sendEmailNotification(String destinationEmail, String content, String addedBy, String pocEmail){
+		
+		      
+        Properties props = new Properties();
+        Session session = Session.getDefaultInstance(props, null);
+ 
+        String msgBody = "A company with the following ID: " + "\n" + content + "\nhas been added to the directory by: \n"
+        		+ addedBy + " at: " + pocEmail + " ";
+ 
+        try {
+            Message msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress("nvtc.directory@gmail.com",
+                    "System Generated"));
+            msg.addRecipient(Message.RecipientType.TO, new InternetAddress(
+                    destinationEmail, "Nvtc Directory Admin"));
+            msg.setSubject("New Company Submitted To NVTC BD&A Directory");
+            msg.setText(msgBody);
+            Transport.send(msg); 
+        } catch (Exception e) {            
+            throw new RuntimeException(e);
+        }
+	}
 	/**
 	 * Method to validate a string. checks that the string is not null
 	 * nor it contains empty spaces. 

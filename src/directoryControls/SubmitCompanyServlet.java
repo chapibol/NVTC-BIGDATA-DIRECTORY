@@ -89,6 +89,9 @@ public class SubmitCompanyServlet extends HttpServlet{
 		//save created company to the datastore
 		Utility.saveCompanyToDatastore(comp);
 		
+		//send email notification that new company has been added
+		Utility.sendEmailNotification("agilmore@nvc.org", comp.getKey().getId()+"",firstName + " " + lastName, email);
+		
 		//create document for search index
 		Document doc = SearchUtility.createCompanyDocument(comp);
 		//add doc to AllCompanies Index
@@ -103,4 +106,6 @@ public class SubmitCompanyServlet extends HttpServlet{
 			response.getWriter().write("Oops Your request could not be complete.");;
 		}		
 	}
+	
+	
 }
